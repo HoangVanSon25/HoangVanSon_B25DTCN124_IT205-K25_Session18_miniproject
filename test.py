@@ -1,5 +1,4 @@
 def calculate_rank(core):
-    """Hàm tiện ích để tính điểm trung bình và xếp loại"""
     average = round(sum(core) / len(core), 2)
     if average >= 8.0:
         rank = "Giỏi"
@@ -11,11 +10,9 @@ def calculate_rank(core):
 
 
 def input_score(prompt, current_score=None):
-    """Hàm nhập điểm có bẫy lỗi chữ và xử lý logic cập nhật (để trống)"""
     while True:
         score_str = input(prompt).strip()
         if score_str == "":
-            # Nếu là hàm update và để trống, giữ nguyên điểm cũ. Nếu là hàm add, mặc định 0.0
             return current_score if current_score is not None else 0.0
         
         try:
@@ -31,8 +28,6 @@ def display_students(students):
     if not students:
         print("Danh sách sinh viên trống.")
         return
-    
-    # In tiêu đề cột cho đẹp và rõ ràng
     print(f"{'ID':<7}| {'Name':<15}| {'Math':<5}| {'Phys':<5}| {'Chem':<5}| {'Avg':<5}| {'Rank'}")
     print("-" * 60)
     for student in students:
@@ -77,8 +72,6 @@ def add_student(students):
 
 def update_student(students):
     id_student = input("Nhập ID sinh viên cần cập nhật: ").strip().upper()
-    
-    # Tìm sinh viên trực tiếp trong danh sách thay vì list comprehension gây đè biến
     target_student = None
     for student in students:
         if student['id_student'] == id_student:
@@ -90,15 +83,12 @@ def update_student(students):
         return
 
     print(f"Đang cập nhật cho sinh viên: {target_student['name']}")
-    # Truyền điểm cũ vào hàm để nếu nhấn Enter sẽ giữ nguyên điểm cũ
     input_math = input_score("Nhập điểm Toán mới (để trống nếu giữ nguyên): ", target_student['core'][0])
     input_physics = input_score("Nhập điểm Lý mới (để trống nếu giữ nguyên): ", target_student['core'][1])
     input_chemistry = input_score("Nhập điểm Hóa mới (để trống nếu giữ nguyên): ", target_student['core'][2])
     
     core = (input_math, input_physics, input_chemistry)
     average, rank = calculate_rank(core)
-    
-    # Cập nhật trực tiếp vào reference của sinh viên trong list
     target_student['core'] = core
     target_student['average'] = average
     target_student['rank'] = rank
@@ -156,7 +146,6 @@ def average_score(students):
     print(f"Số lượng học sinh xếp loại Trung bình: {count_rank3}")
 
 
-# --- Chương trình chính ---
 list_student = [
     {'id_student': "SV001", 'name': 'Nguyen Van A', "core": (8.5, 7.0, 9.0), 'average': 8.17, 'rank': "Giỏi"},
     {'id_student': "SV002", 'name': 'Le Thi B', "core": (6.0, 7.5, 8.0), 'average': 7.17, 'rank': "Khá"},
